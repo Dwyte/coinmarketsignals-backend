@@ -28,10 +28,7 @@ router.get("/klines", async (req, res) => {
     });
 });
 
-app.use('/.netlify/functions/api', router);
+app.use(`/.netlify/functions/api`, router);
 
+module.exports = app;
 module.exports.handler = serverless(app);
-
-
-const PORT = process.envPORT || 3000;
-app.listen(PORT, () => console.log(`Listening to port ${PORT}`));
