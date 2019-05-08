@@ -1,8 +1,12 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const request = require("request");
+const cors = require("cors");
 const app = express();
 const router = express.Router();
+
+
+app.use(cors());
 
 router.get("/price", async (req, res) => {
     let url = "https://api.binance.com/api/v3/ticker/price?";
