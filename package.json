@@ -17,6 +17,7 @@
     "netlify-lambda": "^1.4.7",
     "path": "^0.12.7",
     "request": "^2.88.0",
+    "request-promise": "^4.2.4",
     "serverless-http": "^2.0.1"
   }
 }

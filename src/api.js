@@ -1,9 +1,11 @@
 const express = require("express");
 const serverless = require("serverless-http");
-const request = require("request");
+const request = require("request-promise");
 const cors = require("cors");
 const app = express();
 const router = express.Router();
+
+const result = require("./tools/rsiTool");
 
 
 app.use(cors());
@@ -13,11 +15,7 @@ router.get("/price", async (req, res) => {
     const {symbol} = req.query;
     if(symbol) url += `symbol=${symbol}`;
 
-    request.get({ url }, (error, response, body) => {
-        if(error) return res.send(error);        
-
-        res.send(body);
-    });
+    res.send(await request.get(url));
 });
 
 router.get("/klines", async (req, res) => {
@@ -25,11 +23,13 @@ router.get("/klines", async (req, res) => {
     const {symbol, interval, limit} = req.query;
     url += `symbol=${symbol}&interval=${interval}&limit=${limit}`;
 
-    request.get({ url }, (error, response, body) => {
-        if(error) return res.send(error);
+    res.send(await request.get(url));
+});
 
-        res.send(body);
-    });
+router.get("/bookTicker", async (req, res) => {
+    let url = "https://api.binance.com/api/v3/ticker/bookTicker";
+
+    res.send(await request.get(url));
 });
 
 app.use(`/.netlify/functions/api`, router);
